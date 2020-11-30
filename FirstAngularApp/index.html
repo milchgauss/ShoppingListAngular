@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+<body>
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    //$scope.productName= "John";
+ $scope.overallcost=0;
+ $scope.products=[];
+      $scope.addItem = function () {
+        $scope.errortext = "";
+        if (!$scope.addMe) {return;}        
+        if ($scope.products.indexOf($scope.addMe) == -1) {
+            $scope.products.push($scope.addMe);
+        } 
+        else if($scope.products.length>=12){
+            alert("Too may items!");
+        }  
+          
+          else {
+          
+            alert("You already added that!");
+        }
+    }
+      
+    $scope.removeItem = function (x) {
+        $scope.errortext = "";    
+        $scope.products.splice(x, 1);
+    }
+  
+});
+    
+</script>
+
+
+<!-- Using Angular, we will create a UI for
+a virtual shopping cart.-->
+    <div class="Application">
+<h2>Shopping List</h2>
+    <p> Add items to the grocery list by clicking the "add item" button.
+    <br>
+    This application will calculate the cost of all items.
+    <br>
+    <br>
+   Hover over the "Add" and "Calculate Cost" button to add grocery list items. 
+    <br>    
+    Or, calculate the total cost of each item, and calculate the total cost of all items.
+    <br>
+    <br>
+   There is a subtract button (-) to subtract an item beside
+    each item that is generated.
+    <br>
+    </p>
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<div class="ProductList">
+ <ul>
+    <li ng-repeat="x in products">{{x}}<span ng-click="removeItem($index)">    (-)</span></li>
+  </ul>
+    
+ Product: <input ng-model="addMe">
+ <button ng-mouseover="addItem()">Add</button>
+<br>
+<br>
+    
+</div>    
+    
+<!-- Calculating costs of product happens below-->
+Cost per item:	€ <input type="number" step="0.01" ng-model="price">
+<br>
+<br>
+Quantity (Number of Items): <input type="number" ng-model="quantity">
+
+<button ng-mouseover="overallcost=(price*quantity)+overallcost"
+>Calculate Cost</button>  
+<br>
+<br>
+
+Products: {{productName}}
+
+<br>
+<br>
+Total cost of items:€ {{price*quantity|number:2}}
+<br> 
+Overall cost:€{{overallcost|number:2}}   
+ 
+</div>
+</div>
+
+</body>
+</html>
